@@ -1,0 +1,7 @@
+#ให้ git จัดการ line ending แต่เก็บไว้ใน repo เป็น LF
+* text=auto
+
+#บังคับให้ไฟล์ทีcodeเป็น LF
+*.js text eol=lf
+*.json text eol=lf
+*.html text eol=lf

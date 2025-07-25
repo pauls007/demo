@@ -1,0 +1,245 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "c2e45a34cd7be5b4",
+        "type": "mqtt-broker",
+        "name": "MQTT server",
+        "broker": "192.168.0.154",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "be726512ffad4ef0",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "Influxdb2",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.0.154:8086/",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "1d5d012446d0fdd1",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "hello world",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2e45a34cd7be5b4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 300,
+        "y": 120,
+        "wires": [
+            [
+                "46e1b8790a285cb6"
+            ]
+        ]
+    },
+    {
+        "id": "5bbacd55cc5fbd32",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "hello world",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c2e45a34cd7be5b4",
+        "x": 530,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "348569e3fa64b84c",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 220,
+        "wires": [
+            [
+                "5bbacd55cc5fbd32"
+            ]
+        ]
+    },
+    {
+        "id": "46e1b8790a285cb6",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "d6a77d7bfca6e10e",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "be726512ffad4ef0",
+        "name": "",
+        "measurement": "temperature values",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "nodered",
+        "bucket": "nodered_demo_bucket",
+        "x": 680,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "cafe4f796b7107d7",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 320,
+        "wires": [
+            [
+                "9f342fa509feba17"
+            ]
+        ]
+    },
+    {
+        "id": "9f342fa509feba17",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "random temperature function ",
+        "func": "let rnd = parseInt((35-20+1)*Math.random()+20);\nmsg.payload=rnd;\nnode.warn(rnd);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 320,
+        "wires": [
+            [
+                "dbe9323cc3ee637e"
+            ]
+        ]
+    },
+    {
+        "id": "aba5e61d5b496d77",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "Temperture",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2e45a34cd7be5b4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 460,
+        "wires": [
+            [
+                "d6a77d7bfca6e10e"
+            ]
+        ]
+    },
+    {
+        "id": "dbe9323cc3ee637e",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "Temperture",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c2e45a34cd7be5b4",
+        "x": 770,
+        "y": 320,
+        "wires": []
+    }
+]
